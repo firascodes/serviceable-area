@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('/serviceable-area', 'ServiceableAreaController@index');
+
+Route::post('/check-coordinates', 'CoordinateCheckController@check');
+
+Route::post('/save-serviceable-area', 'ServiceableAreaController@store');

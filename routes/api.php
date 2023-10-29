@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CoordinateCheckController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/serviceable-area', 'ServiceableAreaController@index');
+Route::get('/serviceable-area', [ServiceableAreaController::class, 'index']);
 
-Route::post('/check-coordinates', 'CoordinateCheckController@check');
+Route::post('/check-coordinates', [CoordinateCheckController::class, 'check']);
 
-Route::post('/save-serviceable-area', 'ServiceableAreaController@store');
+Route::post('/save-serviceable-area', [ServiceableAreaController::class, 'store']);

@@ -45,8 +45,10 @@ class ServiceableAreaController extends Controller
         $redisCoordinates = [];
         foreach ($coordinates as $coordinate) {
             $redisCoordinates[] = [
-                $coordinate['longitude'],
                 $coordinate['latitude'],
+                // Latitude first
+                $coordinate['longitude'],
+                // Longitude second
             ];
         }
 

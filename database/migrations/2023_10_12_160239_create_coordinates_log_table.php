@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('coordinates_log', function (Blueprint $table) {
+        Schema::create('coordinates_logs', function (Blueprint $table) {
             $table->id();
             $table->json('coordinates');
             $table->boolean('is_serviceable');

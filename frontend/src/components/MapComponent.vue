@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full">
-    <GMapMap :center="center" :zoom="4" class="w-full h-full">
+    <GMapMap :center="center" :zoom="10" class="w-full h-full">
       <GMapPolygon :paths="paths" />
     </GMapMap>
   </div>
@@ -8,15 +8,17 @@
 
 
 <script>
+
 export default {
   name: 'App',
   data() {
     return {
-      center: { lat: 25.774, lng: -80.19 },
+      center: { lat: 28.6139, lng: 77.2090 },
       paths: [
-        { lat: 25.774, lng: -80.19 },
-        { lat: 18.466, lng: -66.118 },
-        { lat: 32.321, lng: -64.757 },
+        { lat: 28.5139, lng: 77.1090 },
+        { lat: 28.7139, lng: 77.1090 },
+        { lat: 28.7139, lng: 77.3090 },
+        { lat: 28.5139, lng: 77.3090 },
       ],
       options: {
         fillColor: '#ff0000',

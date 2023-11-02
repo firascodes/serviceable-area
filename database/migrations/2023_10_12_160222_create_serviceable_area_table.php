@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('serviceable_area', function (Blueprint $table) {
             $table->id();
-            $table->json('boundary_coordinates');
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
             $table->timestamps();
         });
     }

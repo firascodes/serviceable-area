@@ -3,10 +3,10 @@
 
     <div class="flex h-[80vh] bg-gray-100">
         <div class="flex-1 overflow-hidden bg-white shadow ">
-            <MapComponent class="w-full h-full" />
+            <MapComponent class="w-full h-full" :marker="marker" />
         </div>
         <div class="p-8 px-10 space-y-4 overflow-auto bg-white shadow rounded-lg">
-            <PlaceSearchInputComponent />
+            <PlaceSearchInputComponent @place-selected="updateMarker" />
             <div class="text-center">
                 <button
                     class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">
@@ -26,6 +26,16 @@ export default {
     components: {
         MapComponent,
         PlaceSearchInputComponent,
+    },
+    data() {
+        return {
+            marker: null // This will hold the marker coordinates
+        }
+    },
+    methods: {
+        updateMarker(coordinates) {
+            this.marker = coordinates; // Update the marker when a place is selected
+        }
     }
 }
 </script>

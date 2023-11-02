@@ -10,8 +10,8 @@ class ServiceableAreaController extends Controller
 {
     public function index()
     {
-        // Retrieve the boundary coordinates from the database
-        $coordinates = ServiceableArea::select('boundary_coordinates')->get();
+        // Retrieve the latitude and longitude from the database
+        $coordinates = ServiceableArea::select('latitude', 'longitude')->get();
 
         // Return the coordinates as a JSON response
         return response()->json(['boundary_coordinates' => $coordinates]);
@@ -20,40 +20,47 @@ class ServiceableAreaController extends Controller
 
     public function store(Request $request)
     {
-        //assuming the api returns the coordinates in the following format
+        // Assuming the API receives the coordinates in the following format:
+        // [
+        //     {"latitude": 40.7128, "longitude": 74.0060},
+        //     {"latitude": 34.0522, "longitude": 118.2437},
+        //     ...
+        // ]
         $validatedData = $request->validate([
-            'boundary_coordinates' => 'required|json',
+            'boundary_coordinates' => 'required|array',
+            'boundary_coordinates.*.latitude' => 'required|numeric',
+            'boundary_coordinates.*.longitude' => 'required|numeric',
         ]);
 
-        $serviceableArea = ServiceableArea::create([
-            'boundary_coordinates' => $validatedData['boundary_coordinates'],
-        ]);
+        foreach ($validatedData['boundary_coordinates'] as $coordinate) {
+            $serviceableArea = ServiceableArea::create([
+                'latitude' => $coordinate['latitude'],
+                'longitude' => $coordinate['longitude'],
+            ]);
 
-        $serviceableArea->save();
-
-        Redis::geoadd('serviceable_areas', $this->extractCoordinates($validatedData['boundary_coordinates']));
+            $serviceableArea->save();
+        }
 
         return response()->json(['message' => 'Serviceable area saved successfully!']);
-
     }
 
     // Helper function to extract coordinates from JSON
-    private function extractCoordinates($jsonCoordinates)
-    {
-        $coordinates = json_decode($jsonCoordinates, true);
+    // private function extractCoordinates($jsonCoordinates)
+    // {
+    //     $coordinates = json_decode($jsonCoordinates, true);
 
-        $redisCoordinates = [];
-        foreach ($coordinates as $coordinate) {
-            $redisCoordinates[] = [
-                $coordinate['latitude'],
-                // Latitude first
-                $coordinate['longitude'],
-                // Longitude second
-            ];
-        }
+    //     $redisCoordinates = [];
+    //     foreach ($coordinates as $coordinate) {
+    //         $redisCoordinates[] = [
+    //             $coordinate['latitude'],
+    //             // Latitude first
+    //             $coordinate['longitude'],
+    //             // Longitude second
+    //         ];
+    //     }
 
-        return $redisCoordinates;
-    }
+    //     return $redisCoordinates;
+    // }
 
 
 }

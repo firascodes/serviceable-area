@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CoordinateCheckController;
+use App\Http\Controllers\ServiceableAreaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

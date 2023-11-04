@@ -1,12 +1,14 @@
 <template>
   <div class="w-full h-full">
     <GMapMap :center="center" :zoom="10" class="w-full h-full">
-      <GMapMarker v-if="marker" :position="marker" :icon='{
-        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Map_marker.svg/640px-Map_marker.svg.png",
-        scaledSize: { width: 35, height: 50 },
-        // labelOrigin: {x: 16, y: -10}
-      }' />
-      <GMapPolygon :paths="paths" :options="options" />
+      <GMapMarker v-for="(marker, index) in markers" :key="index"
+        :position="marker" :icon='{
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Map_marker.svg/640px-Map_marker.svg.png",
+          scaledSize: { width: 35, height: 50 },
+          // labelOrigin: {x: 16, y: -10}
+        }' />
+      <GMapPolygon v-if="polygon && polygon.length" :paths="polygon"
+        :options="options" />
     </GMapMap>
   </div>
 </template>
@@ -35,7 +37,8 @@ export default {
     }
   },
   props: {
-    marker: Object // Receive the marker as a prop
+    markers: Array,
+    polygon: Array
   },
 }
 </script>

@@ -32,6 +32,8 @@ class ServiceableAreaController extends Controller
             'boundary_coordinates.*.longitude' => 'required|numeric',
         ]);
 
+        // dd($request->all());
+
         foreach ($validatedData['boundary_coordinates'] as $coordinate) {
             $serviceableArea = ServiceableArea::create([
                 'latitude' => $coordinate['latitude'],

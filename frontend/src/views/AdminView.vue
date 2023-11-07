@@ -45,7 +45,7 @@ export default {
 
                 console.log(boundary_coordinates);
 
-                const response = await axios.post('http://localhost:8000/api/save-serviceable-area', { boundary_coordinates });
+                const response = await axios.post('https://localhost:8000/api/save-serviceable-area', { boundary_coordinates });
                 // Handle the response
                 if (response.data.message) {
                     alert(response.data.message);  // Show a success message

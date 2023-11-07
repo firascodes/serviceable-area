@@ -1,10 +1,10 @@
 // import './assets/main.css'
+import './axios'
 
 import VueGoogleMaps from '@fawmi/vue-google-maps'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import './axios'
 
 import App from './App.vue'
 import router from './router'

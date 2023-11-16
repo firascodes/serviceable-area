@@ -12,6 +12,7 @@
   "dependencies": {
     "@fawmi/vue-google-maps": "^0.9.79",
     "autoprefixer": "^10.4.16",
+    "axios": "^1.6.0",
     "dotenv": "^16.3.1",
     "pinia": "^2.1.6",
     "postcss": "^8.4.31",

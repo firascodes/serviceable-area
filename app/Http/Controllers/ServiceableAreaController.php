@@ -45,6 +45,8 @@ class ServiceableAreaController extends Controller
         ]);
 
         // dd($request->all());
+        // Truncate the table before adding the new coordinates
+        ServiceableArea::truncate();
 
         foreach ($validatedData['boundary_coordinates'] as $coordinate) {
             $serviceableArea = ServiceableArea::create([

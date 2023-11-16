@@ -24,7 +24,16 @@
 <script>
 export default {
   name: 'MapComponent',
-  props: ['marker', 'polygon', 'drawing', 'editable', 'center'],
+  props: {
+    marker: null,
+    polygon: null,
+    drawing: Boolean,
+    editable: Boolean,
+    center: {
+      type: Object,
+      default: () => ({ lat: 28.6139, lng: 77.209 }) // default center value
+    }
+  },
   data() {
     return {
       curentPolygon: null,

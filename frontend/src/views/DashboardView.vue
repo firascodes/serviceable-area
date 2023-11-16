@@ -77,6 +77,7 @@ export default {
           this.isServiceable = response.data.is_serviceable
           this.message = this.isServiceable ? 'Area is serviceable' : 'Area is not serviceable'
         })
+        // eslint-disable-next-line no-unused-vars
         .catch((error) => {
           this.message = 'An error occurred'
         })

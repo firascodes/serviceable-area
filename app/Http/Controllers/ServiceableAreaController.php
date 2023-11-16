@@ -13,8 +13,19 @@ class ServiceableAreaController extends Controller
         // Retrieve the latitude and longitude from the database
         $coordinates = ServiceableArea::select('latitude', 'longitude')->get();
 
-        // Return the coordinates as a JSON response
-        return response()->json(['boundary_coordinates' => $coordinates]);
+        // Transform each ServiceableArea instance into an array of latitude and longitude values
+        $boundary_coordinates = $coordinates->map(function ($coordinate) {
+            return [
+                'latitude' => $coordinate->latitude,
+                'longitude' => $coordinate->longitude,
+            ];
+        });
+
+        // Convert the collection to a plain PHP array
+        $boundary_coordinates = $boundary_coordinates->toArray();
+
+        // Return the coordinates as an array
+        return $boundary_coordinates;
     }
 
 
@@ -22,6 +33,7 @@ class ServiceableAreaController extends Controller
     {
         // Assuming the API receives the coordinates in the following format:
         // [
+        // boundary_coordinates
         //     {"latitude": 40.7128, "longitude": 74.0060},
         //     {"latitude": 34.0522, "longitude": 118.2437},
         //     ...

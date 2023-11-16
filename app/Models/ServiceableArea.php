@@ -10,6 +10,8 @@ class ServiceableArea extends Model
     use HasFactory;
     protected $table = 'serviceable_area';
     protected $fillable = [
+        'latitude',
+        'longitude',
         'boundary_coordinates',
     ];
 }

@@ -13,9 +13,21 @@
     <div class="p-8 px-10 space-y-4 overflow-auto bg-white shadow rounded-lg">
       <PlaceSearchInputComponent @place-selected="updateMarker" />
       <div class="text-center">
-        <button class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">
+        <button
+          class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+          @click="checkServiceability"
+          :disabled="isLoading"
+        >
           Check Serviceability
+          <span v-if="isLoading" class="loader"></span>
         </button>
+        <p
+          v-if="message"
+          :class="{ 'bg-green-500': isServiceable, 'bg-red-500': !isServiceable }"
+          class="mt-14 text-xl font-bold text-white py-4 rounded-full"
+        >
+          {{ message }}
+        </p>
       </div>
     </div>
   </div>
@@ -36,12 +48,41 @@ export default {
     return {
       marker: null, // This will hold the marker coordinates
       boundary_coordinates: [], // This will hold the boundary coordinates
-      center: { lat: 28.6139, lng: 77.209 }
+      center: { lat: 28.6139, lng: 77.209 },
+      isLoading: false,
+      isServiceable: false,
+      message: ''
     }
   },
   methods: {
     updateMarker(coordinates) {
       this.marker = coordinates // Update the marker when a place is selected
+    },
+    checkServiceability() {
+      this.isLoading = true
+
+      const { marker } = this
+
+      //   console.log(marker.lat) // logs the latitude
+      //   console.log(marker.lng) // logs the longitude
+
+      this.isLoading = false
+
+      axios
+        .post('http://127.0.0.1:8000/api/check-coordinates', {
+          latitude: marker.lat,
+          longitude: marker.lng
+        })
+        .then((response) => {
+          this.isServiceable = response.data.is_serviceable
+          this.message = this.isServiceable ? 'Area is serviceable' : 'Area is not serviceable'
+        })
+        .catch((error) => {
+          this.message = 'An error occurred'
+        })
+        .finally(() => {
+          this.isLoading = false
+        })
     }
   },
   async created() {

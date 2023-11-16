@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold">Admin</h1>
-    <div class="flex gap-2 m-2">
+    <div class="flex gap-2 my-2 mr-2">
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         @click="createPolygon"
@@ -151,10 +151,19 @@ export default {
         }))
 
         console.log(boundary_coordinates)
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
-        const response = await axios.post('http://127.0.0.1:8000/api/save-serviceable-area', {
-          boundary_coordinates
-        })
+        const response = await axios.post(
+          'http://127.0.0.1:8000/api/save-serviceable-area',
+          {
+            boundary_coordinates
+          },
+          {
+            headers: {
+              'X-CSRF-TOKEN': csrfToken
+            }
+          }
+        )
         // Handle the response
         if (response.data.message) {
           alert(response.data.message) // Show a success message
